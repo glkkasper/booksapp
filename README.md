@@ -2,11 +2,17 @@
 Repositório de teste de JDBC
 
 ## codigos
+
 rodar sql local
 ```shell script
-podman run --name meu-mysql -e MYSQL_ROOT_PASSWORD=minhasenha -d mysql 
+podman run --name meu-mysql -e MYSQL_ROOT_PASSWORD=minhasenha -p 3306:3306 -d mysql 
 ```
-Ver se o container esta ativo
+Executa os comandos sql dentro do container
+```shell script
+podman exec -it meu-mysql mysql -uroot -p
+```
+
+Ver todos os containers que ja rodaram na maquina
 ```shell script
 podman ps -a
 ```
