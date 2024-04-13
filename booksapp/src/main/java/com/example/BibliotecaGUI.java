@@ -13,34 +13,71 @@ public class BibliotecaGUI extends JFrame {
     public BibliotecaGUI() {
         super("Sistema de Biblioteca");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 400);
-        setLayout(new FlowLayout());
+        setSize(900, 600);
+        setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(1, 1, 1, 1);
 
+        // Labels
+        constraints.gridx = 0; // primeira coluna
+        constraints.gridy = 0; // primeira linha
+        add(new JLabel("Título:"), constraints);
+
+        constraints.gridy++; // próxima linha
+        add(new JLabel("Autor:"), constraints);
+
+        constraints.gridy++; // próxima linha
+        add(new JLabel("Ano de Publicação:"), constraints);
+
+        constraints.gridy++; // próxima linha
+        add(new JLabel("ID (para atualizar/deletar):"), constraints);
+
+        // Text Fields
+        constraints.gridx = 1; // segunda coluna
+        constraints.gridy = 0; // primeira linha
         txtTitulo = new JTextField(20);
+        add(txtTitulo, constraints);
+
+        constraints.gridy++; // próxima linha
         txtAutor = new JTextField(20);
+        add(txtAutor, constraints);
+
+        constraints.gridy++; // próxima linha
         txtAnoPublicacao = new JTextField(20);
+        add(txtAnoPublicacao, constraints);
+
+        constraints.gridy++; // próxima linha
         txtId = new JTextField(20);
-        txtAreaResultados = new JTextArea(10, 40);
-        txtAreaResultados.setEditable(false);
+        add(txtId, constraints);
 
+        // Buttons
+        constraints.gridx = 0; // primeira coluna
+        constraints.gridwidth = 2; // ocupa duas colunas
+        constraints.gridy++; // próxima linha
         btnInserir = new JButton("Inserir");
-        btnConsultar = new JButton("Consultar");
-        btnAtualizar = new JButton("Atualizar");
-        btnDeletar = new JButton("Deletar");
+        add(btnInserir, constraints);
 
-        add(new JLabel("Título:"));
-        add(txtTitulo);
-        add(new JLabel("Autor:"));
-        add(txtAutor);
-        add(new JLabel("Ano de Publicação:"));
-        add(txtAnoPublicacao);
-        add(new JLabel("ID (para atualizar/deletar):"));
-        add(txtId);
-        add(btnInserir);
-        add(btnConsultar);
-        add(btnAtualizar);
-        add(btnDeletar);
-        add(new JScrollPane(txtAreaResultados));
+        constraints.gridy++; // próxima linha
+        btnConsultar = new JButton("Consultar");
+        add(btnConsultar, constraints);
+
+        constraints.gridy++; // próxima linha
+        btnAtualizar = new JButton("Atualizar");
+        add(btnAtualizar, constraints);
+
+        constraints.gridy++; // próxima linha
+        btnDeletar = new JButton("Deletar");
+        add(btnDeletar, constraints);
+
+        // Result Area
+        constraints.gridy++; // próxima linha
+        txtAreaResultados = new JTextArea(5, 20);
+        txtAreaResultados.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(txtAreaResultados);
+        constraints.ipady = 40; // torna a área de texto um pouco maior
+        add(scrollPane, constraints);
 
         btnInserir.addActionListener(e -> inserirLivro());
         btnConsultar.addActionListener(e -> consultarLivros());
