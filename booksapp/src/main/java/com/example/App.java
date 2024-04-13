@@ -34,7 +34,7 @@ public class App
             e.printStackTrace();
         }
     }
-    private static String InserirLivro (Statement statement, String titulo, String autor, int ano_publicacao) throws SQLException
+    public static String InserirLivro (Statement statement, String titulo, String autor, int ano_publicacao) throws SQLException
     {
         int retorno = statement.executeUpdate("INSERT INTO livros (titulo, autor, ano_publicacao) VALUES ('"+ titulo + "', '"+ autor + "', "+ ano_publicacao + ");");
         if (retorno == 1) {
@@ -44,16 +44,17 @@ public class App
         return "Erro ao inserir livro"; 
     }
 
-    private static void ConsultarLivros (Statement statement) throws SQLException
+    public static ResultSet ConsultarLivros (Statement statement) throws SQLException
     {
         ResultSet resultados = statement.executeQuery("SELECT * FROM livros"); 
         while (resultados.next()) {
             System.out.println("ID: " + resultados.getInt("id") + ", Título: " + resultados.getString("titulo") + ", Autor: " + resultados.getString("autor") + ", Ano de Publicação: " + resultados.getInt("ano_publicacao"));
             
         }
+        return resultados;
     }
 
-        private static String AtualizarLivro (Statement statement, String titulo, String autor, int ano_publicacao, int id) throws SQLException
+        public static String AtualizarLivro (Statement statement, String titulo, String autor, int ano_publicacao, int id) throws SQLException
     {
         int retorno = statement.executeUpdate("UPDATE livros SET titulo='" + titulo + "', autor='" + autor + "', ano_publicacao=" + ano_publicacao + " WHERE id=" + id); 
             if (retorno == 1) {
@@ -63,7 +64,7 @@ public class App
             return "Erro ao atualizar livro"; 
     }
         
-        private static String DeletarLivro (Statement statement, int id) throws SQLException
+        public static String DeletarLivro (Statement statement, int id) throws SQLException
     {
         int retorno = statement.executeUpdate("DELETE FROM livros WHERE id=" + id);
         if (retorno == 1) {
