@@ -20,7 +20,11 @@ public class App
         try (Connection conexao = DriverManager.getConnection(url, user, passowrd)){
             System.out.println("Conexao bem sucedida");
             Statement comando = conexao.createStatement();
-            System.out.println(InserirLivro(comando, "RedHat", "Tulio", 2024)); 
+    /*       System.out.println(InserirLivro(comando, "RedHat", "Tulio", 2024)); */
+            ConsultarLivros(comando);
+            AtualizarLivro(comando, "Revolucao dos bichos", "Gorge", 2018, 2);
+            ConsultarLivros(comando);
+            DeletarLivro(comando, 1);
             ConsultarLivros(comando);
         } catch (SQLException e) { //tratar excecoes
             System.out.println ("Excessao SQL");
@@ -29,9 +33,7 @@ public class App
             System.out.println ("Excessao Generica");
             e.printStackTrace();
         }
-
     }
-
     private static String InserirLivro (Statement statement, String titulo, String autor, int ano_publicacao) throws SQLException
     {
         int retorno = statement.executeUpdate("INSERT INTO livros (titulo, autor, ano_publicacao) VALUES ('"+ titulo + "', '"+ autor + "', "+ ano_publicacao + ");");
@@ -51,4 +53,23 @@ public class App
         }
     }
 
+        private static String AtualizarLivro (Statement statement, String titulo, String autor, int ano_publicacao, int id) throws SQLException
+    {
+        int retorno = statement.executeUpdate("UPDATE livros SET titulo='" + titulo + "', autor='" + autor + "', ano_publicacao=" + ano_publicacao + " WHERE id=" + id); 
+            if (retorno == 1) {
+                return "Livro atualizado com sucesso";
+                
+            }
+            return "Erro ao atualizar livro"; 
+    }
+        
+        private static String DeletarLivro (Statement statement, int id) throws SQLException
+    {
+        int retorno = statement.executeUpdate("DELETE FROM livros WHERE id=" + id);
+        if (retorno == 1) {
+            return "Livro deletado com sucesso";
+            
+        }
+        return "Erro ao deletar livro"; 
+    }
 }
