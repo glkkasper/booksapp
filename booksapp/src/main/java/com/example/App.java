@@ -44,14 +44,15 @@ public class App
         return "Erro ao inserir livro"; 
     }
 
-    public static ResultSet ConsultarLivros (Statement statement) throws SQLException
+    public static String ConsultarLivros (Statement statement) throws SQLException
     {
         ResultSet resultados = statement.executeQuery("SELECT * FROM livros"); 
+        String resultadosFormatados = "";
         while (resultados.next()) {
-            System.out.println("ID: " + resultados.getInt("id") + ", Título: " + resultados.getString("titulo") + ", Autor: " + resultados.getString("autor") + ", Ano de Publicação: " + resultados.getInt("ano_publicacao"));
+           resultadosFormatados.concat("ID: " + resultados.getInt("id") + ", Título: " + resultados.getString("titulo") + ", Autor: " + resultados.getString("autor") + ", Ano de Publicação: " + resultados.getInt("ano_publicacao" + "\n"));
             
         }
-        return resultados;
+        return resultadosFormatados;
     }
 
         public static String AtualizarLivro (Statement statement, String titulo, String autor, int ano_publicacao, int id) throws SQLException

@@ -110,12 +110,8 @@ public class BibliotecaGUI extends JFrame {
     private void consultarLivros() {
         try (Connection connection = conectar();
              Statement statement = connection.createStatement()) {
-            ResultSet resultados = App.ConsultarLivros(statement);
-            StringBuilder sb = new StringBuilder();
-            while (resultados.next()) {
-                sb.append("ID: ").append(resultados.getInt("id")).append(", Título: ").append(resultados.getString("titulo")).append(", Autor: ").append(resultados.getString("autor")).append(", Ano de Publicação: ").append(resultados.getInt("ano_publicacao")).append("\n");
-            }
-            txtAreaResultados.setText(sb.toString());
+            String resultados = App.ConsultarLivros(statement);
+            txtAreaResultados.setText(resultados);
         } catch (SQLException ex) {
             txtAreaResultados.setText("Erro ao consultar livros");
         }
@@ -150,4 +146,3 @@ public class BibliotecaGUI extends JFrame {
         SwingUtilities.invokeLater(BibliotecaGUI::new);
     }
 }
-
