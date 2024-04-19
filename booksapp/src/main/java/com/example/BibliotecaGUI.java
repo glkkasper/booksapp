@@ -13,12 +13,12 @@ public class BibliotecaGUI extends JFrame {
     public BibliotecaGUI() {
         super("Sistema de Biblioteca");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 600);
+        setSize(600, 600);
         setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.anchor = GridBagConstraints.WEST;
-        constraints.insets = new Insets(1, 1, 1, 1);
+        constraints.insets = new Insets(5, 5, 5, 5);
 
         // Labels
         constraints.gridx = 0; // primeira coluna
@@ -37,24 +37,24 @@ public class BibliotecaGUI extends JFrame {
         // Text Fields
         constraints.gridx = 1; // segunda coluna
         constraints.gridy = 0; // primeira linha
-        txtTitulo = new JTextField(20);
+        txtTitulo = new JTextField(25);
         add(txtTitulo, constraints);
 
         constraints.gridy++; // próxima linha
-        txtAutor = new JTextField(20);
+        txtAutor = new JTextField(25);
         add(txtAutor, constraints);
 
         constraints.gridy++; // próxima linha
-        txtAnoPublicacao = new JTextField(20);
+        txtAnoPublicacao = new JTextField(25);
         add(txtAnoPublicacao, constraints);
 
         constraints.gridy++; // próxima linha
-        txtId = new JTextField(20);
+        txtId = new JTextField(25);
         add(txtId, constraints);
 
         // Buttons
         constraints.gridx = 0; // primeira coluna
-        constraints.gridwidth = 2; // ocupa duas colunas
+        constraints.gridwidth = 5; // ocupa duas colunas
         constraints.gridy++; // próxima linha
         btnInserir = new JButton("Inserir");
         add(btnInserir, constraints);
@@ -73,10 +73,10 @@ public class BibliotecaGUI extends JFrame {
 
         // Result Area
         constraints.gridy++; // próxima linha
-        txtAreaResultados = new JTextArea(5, 20);
+        txtAreaResultados = new JTextArea(10, 20);
         txtAreaResultados.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(txtAreaResultados);
-        constraints.ipady = 40; // torna a área de texto um pouco maior
+        constraints.ipady = 15; // torna a área de texto um pouco maior
         add(scrollPane, constraints);
 
         btnInserir.addActionListener(e -> inserirLivro());
@@ -103,7 +103,7 @@ public class BibliotecaGUI extends JFrame {
             App.InserirLivro(statement, titulo, autor, anoPublicacao);
             txtAreaResultados.setText("Livro inserido com sucesso!");
         } catch (SQLException ex) {
-            txtAreaResultados.setText("Erro ao inserir livro: " + ex.getMessage());
+            txtAreaResultados.setText("Erro ao inserir livro");
         }
     }
 
@@ -117,7 +117,7 @@ public class BibliotecaGUI extends JFrame {
             }
             txtAreaResultados.setText(sb.toString());
         } catch (SQLException ex) {
-            txtAreaResultados.setText("Erro ao consultar livros: " + ex.getMessage());
+            txtAreaResultados.setText("Erro ao consultar livros");
         }
     }
 
@@ -131,7 +131,7 @@ public class BibliotecaGUI extends JFrame {
             App.AtualizarLivro(statement, titulo, autor, anoPublicacao, id);
             txtAreaResultados.setText("Livro atualizado com sucesso!");
         } catch (SQLException ex) {
-            txtAreaResultados.setText("Erro ao atualizar livro: " + ex.getMessage());
+            txtAreaResultados.setText("Erro ao atualizar livro");
         }
     }
 
@@ -142,7 +142,7 @@ public class BibliotecaGUI extends JFrame {
             App.DeletarLivro(statement, id);
             txtAreaResultados.setText("Livro deletado com sucesso!");
         } catch (SQLException ex) {
-            txtAreaResultados.setText("Erro ao deletar livro: " + ex.getMessage());
+            txtAreaResultados.setText("Erro ao deletar livro");
         }
     }
 
