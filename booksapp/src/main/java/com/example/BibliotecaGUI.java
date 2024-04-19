@@ -102,6 +102,7 @@ public class BibliotecaGUI extends JFrame {
             int anoPublicacao = Integer.parseInt(txtAnoPublicacao.getText());
             App.InserirLivro(statement, titulo, autor, anoPublicacao);
             txtAreaResultados.setText("Livro inserido com sucesso!");
+            connection.close();
         } catch (SQLException ex) {
             txtAreaResultados.setText("Erro ao inserir livro");
         }
@@ -112,6 +113,7 @@ public class BibliotecaGUI extends JFrame {
              Statement statement = connection.createStatement()) {
             String resultados = App.ConsultarLivros(statement);
             txtAreaResultados.setText(resultados);
+            connection.close();
         } catch (SQLException ex) {
             txtAreaResultados.setText("Erro ao consultar livros");
         }
@@ -126,6 +128,7 @@ public class BibliotecaGUI extends JFrame {
             int id = Integer.parseInt(txtId.getText());
             App.AtualizarLivro(statement, titulo, autor, anoPublicacao, id);
             txtAreaResultados.setText("Livro atualizado com sucesso!");
+            connection.close();
         } catch (SQLException ex) {
             txtAreaResultados.setText("Erro ao atualizar livro");
         }
@@ -137,6 +140,7 @@ public class BibliotecaGUI extends JFrame {
             int id = Integer.parseInt(txtId.getText());
             App.DeletarLivro(statement, id);
             txtAreaResultados.setText("Livro deletado com sucesso!");
+            connection.close();
         } catch (SQLException ex) {
             txtAreaResultados.setText("Erro ao deletar livro");
         }

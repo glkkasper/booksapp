@@ -26,6 +26,7 @@ public class App
             ConsultarLivros(comando);
             DeletarLivro(comando, 1);
             ConsultarLivros(comando);
+            conexao.close();
         } catch (SQLException e) { //tratar excecoes
             System.out.println ("Excessao SQL");
             e.printStackTrace();
@@ -46,10 +47,10 @@ public class App
 
     public static String ConsultarLivros (Statement statement) throws SQLException
     {
-        ResultSet resultados = statement.executeQuery("SELECT * FROM livros"); 
+        ResultSet resultados = statement.executeQuery("SELECT * FROM livros;"); 
         String resultadosFormatados = "";
         while (resultados.next()) {
-           resultadosFormatados.concat("ID: " + resultados.getInt("id") + ", Título: " + resultados.getString("titulo") + ", Autor: " + resultados.getString("autor") + ", Ano de Publicação: " + resultados.getInt("ano_publicacao" + "\n"));
+           resultadosFormatados = resultadosFormatados + "ID: " + resultados.getInt("id") + ", Título: " + resultados.getString("titulo") + ", Autor: " + resultados.getString("autor") + ", Ano de Publicação: " + resultados.getInt("ano_publicacao")+ "\n";
             
         }
         return resultadosFormatados;
