@@ -95,58 +95,119 @@ public class BibliotecaGUI extends JFrame {
     }
 
     private void inserirLivro() {
-        try (Connection connection = conectar();
-             Statement statement = connection.createStatement()) {
-            String titulo = txtTitulo.getText();
-            String autor = txtAutor.getText();
-            int anoPublicacao = Integer.parseInt(txtAnoPublicacao.getText());
-            App.InserirLivro(statement, titulo, autor, anoPublicacao);
-            txtAreaResultados.setText("Livro inserido com sucesso!");
-            connection.close();
-        } catch (SQLException ex) {
-            txtAreaResultados.setText("Erro ao inserir livro");
+        if (validarCampos() == true) {
+
+            try (Connection connection = conectar();
+                    Statement statement = connection.createStatement()) {
+                String titulo = txtTitulo.getText();
+                String autor = txtAutor.getText();
+                int anoPublicacao = Integer.parseInt(txtAnoPublicacao.getText());
+                App.InserirLivro(statement, titulo, autor, anoPublicacao);
+                txtAreaResultados.setText("Livro inserido com sucesso!");
+                connection.close();
+                limparCampos();
+            } catch (SQLException ex) {
+                txtAreaResultados.setText("Erro ao inserir livro");
+            }
+        } else {
+            txtAreaResultados.setText("Por favor preencha todos os campos!");
         }
     }
 
     private void consultarLivros() {
         try (Connection connection = conectar();
-             Statement statement = connection.createStatement()) {
-            String resultados = App.ConsultarLivros(statement);
+                Statement statement = connection.createStatement()) {
+            String resultados = "";
+            if (validarCamposConsulta() == true) {
+                resultados = App.ConsultarLivro(statement, txtTitulo.getText(), txtAutor.getText(),
+                        txtAnoPublicacao.getText(), txtId.getText());
+                limparCampos();
+            } else {
+                resultados = App.ConsultarLivros(statement);
+            }
             txtAreaResultados.setText(resultados);
             connection.close();
-        } catch (SQLException ex) {
+        } catch (SQLException ex) { 
             txtAreaResultados.setText("Erro ao consultar livros");
         }
     }
 
     private void atualizarLivro() {
-        try (Connection connection = conectar();
-             Statement statement = connection.createStatement()) {
-            String titulo = txtTitulo.getText();
-            String autor = txtAutor.getText();
-            int anoPublicacao = Integer.parseInt(txtAnoPublicacao.getText());
-            int id = Integer.parseInt(txtId.getText());
-            App.AtualizarLivro(statement, titulo, autor, anoPublicacao, id);
-            txtAreaResultados.setText("Livro atualizado com sucesso!");
-            connection.close();
-        } catch (SQLException ex) {
-            txtAreaResultados.setText("Erro ao atualizar livro");
+        if (validarCampos() == true) {
+
+            try (Connection connection = conectar();
+                    Statement statement = connection.createStatement()) {
+                String titulo = txtTitulo.getText();
+                String autor = txtAutor.getText();
+                int anoPublicacao = Integer.parseInt(txtAnoPublicacao.getText());
+                int id = Integer.parseInt(txtId.getText());
+                App.AtualizarLivro(statement, titulo, autor, anoPublicacao, id);
+                txtAreaResultados.setText("Livro atualizado com sucesso!");
+                connection.close();
+                limparCampos();
+            } catch (SQLException ex) {
+                txtAreaResultados.setText("Erro ao atualizar livro");
+            }
+        } else {
+            txtAreaResultados.setText("Por favor preencha todos os campos!");
         }
     }
 
     private void deletarLivro() {
-        try (Connection connection = conectar();
-             Statement statement = connection.createStatement()) {
-            int id = Integer.parseInt(txtId.getText());
-            App.DeletarLivro(statement, id);
-            txtAreaResultados.setText("Livro deletado com sucesso!");
-            connection.close();
-        } catch (SQLException ex) {
-            txtAreaResultados.setText("Erro ao deletar livro");
+        if (validarCampos() == true) {
+
+            try (Connection connection = conectar();
+                    Statement statement = connection.createStatement()) {
+                int id = Integer.parseInt(txtId.getText());
+                App.DeletarLivro(statement, id);
+                txtAreaResultados.setText("Livro deletado com sucesso!");
+                connection.close();
+                limparCampos();
+            } catch (SQLException ex) {
+                txtAreaResultados.setText("Erro ao deletar livro");
+            }
+        } else {
+            txtAreaResultados.setText("Por favor preencha todos os campos!");
         }
+    }
+
+    private void limparCampos() {
+
+        txtTitulo.setText("");
+        txtAutor.setText("");
+        txtAnoPublicacao.setText("");
+        txtId.setText("");
+    }
+
+    private boolean validarCampos() {
+
+        Boolean resultado = false;
+        String titulo = txtTitulo.getText();
+        String autor = txtAutor.getText();
+        String anoPublicacao = txtAnoPublicacao.getText();
+
+        if (!titulo.isEmpty() && !autor.isEmpty() && !anoPublicacao.isEmpty()) {
+            resultado = true;
+        }
+        return resultado;
+    }
+
+    private boolean validarCamposConsulta() {
+
+        Boolean resultado = false;
+        String titulo = txtTitulo.getText();
+        String autor = txtAutor.getText();
+        String anoPublicacao = txtAnoPublicacao.getText();
+        String id = txtId.getText();
+
+        if (!titulo.isEmpty() || !autor.isEmpty() || !anoPublicacao.isEmpty() || !id.isEmpty()) {
+            resultado = true;
+        }
+        return resultado;
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(BibliotecaGUI::new);
     }
+
 }

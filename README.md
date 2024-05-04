@@ -37,7 +37,20 @@ Porta
 -p
 ```
 
-
+## codigos LINUX 
+```LINUX 
+```pwd - diretorio que estou
+```ls - listor os arquivos de diretorio
+```cd - entrar no diretorio
+```cd .. - pra sair do diretorio
+```podman build - construtor
+```vi (nome do arquivo) - editor de texto top
+... pra editar dentro do VI aperta I, pra salvar
+aperta ESC depois :wq
+```cat (nome do arquivo) - mostrar ele na tela
+```echo - imprimir na tela
+```echo (texto) > (arquivo) - para jogar o que imprimiu na tela para dentro de um arquivo, se nao existe cria um novo
+```podman exec -it (nome do container) /bin/bash - para entrar no bash do container
 
 
 

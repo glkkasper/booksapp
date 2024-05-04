@@ -1,0 +1,6 @@
+# Usar a imagem oficial + recente do MySQL
+FROM mysql:latest
+# Copiar o script SQL para o diretório que será automaticamente executado
+
+COPY sql/BancoBiblioteca.sql /docker-entrypoint-initdb.d/
+# O comando ENTRYPOINT é herdado da imagem base do MySQL, então não precisa ser redefinido 

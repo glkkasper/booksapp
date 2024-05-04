@@ -13,6 +13,6 @@ INSERT INTO livros (titulo, autor, ano_publicacao) VALUES ('Caderno', 'Gabriel',
 SELECT * FROM livros;
 SELECT titulo, autor, ano_publicacao FROM livros WHERE id = 1;
 
-UPDATE livros SET autor = 'Osvaldo' WHERE id = 2;
+/*UPDATE livros SET autor = 'Osvaldo' WHERE id = 2;*/
 
-DELETE FROM livros WHERE id = 2;
+/*DELETE FROM livros WHERE id = 2;*/
