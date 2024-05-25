@@ -1,16 +1,38 @@
+/* Reset some basic elements */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.navbar {
+  background-color: #282c34;
+  padding: 1rem;
+  color: white;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.navbar h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.container {
+  margin-top: 80px; /* To give space for the navbar */
+  padding: 20px;
 }
 
 .App-header {
@@ -24,8 +46,15 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
 }
 
 @keyframes App-logo-spin {
@@ -35,4 +64,61 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input[type="text"], input[type="number"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #61dafb;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #21a1f1;
+}
+
+.book-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.book-item {
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.book-item h2 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.book-item p {
+  margin-bottom: 5px;
+}
+
+.book-item button {
+  margin-right: 10px;
 }
