@@ -95,6 +95,8 @@ function App() {
             required
           />
           <button type="submit">Adicionar Livro</button>
+          <button type="submit">Deletar Livro</button>
+          <button type="submit">Editar Livro</button>
         </form>
         <div className="book-list">
           {books.map(book => (
