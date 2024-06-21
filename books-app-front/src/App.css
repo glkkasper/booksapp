@@ -122,3 +122,10 @@ button:hover {
 .book-item button {
   margin-right: 10px;
 }
+
+.error {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}

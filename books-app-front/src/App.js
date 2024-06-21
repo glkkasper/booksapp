@@ -6,8 +6,10 @@ import axios from 'axios';
 
 function App() {
   const [books, setBooks] = useState([]);
-  const [newBook, setNewBook] = useState({ titulo: '', autor: '', anoPublicacao: '' });
+  const [newBook, setNewBook] = useState({ titulo: '', autor: '', anoPublicacao: '', numeroDePaginas: '' });
   const [editingBook, setEditingBook] = useState(null);
+  const [errors, setErrors] = useState({});
+  const [editErrors, setEditErrors] = useState({});
 
   useEffect(() => {
     fetchBooks();
@@ -25,15 +27,43 @@ function App() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewBook({ ...newBook, [name]: value });
+    setErrors({ ...errors, [name]: '' });
   };
 
   const handleEditChange = (e) => {
     const { name, value } = e.target;
     setEditingBook({ ...editingBook, [name]: value });
+    setEditErrors({ ...editErrors, [name]: '' });
+  };
+
+  const validate = (book) => {
+    let errors = {};
+    if (!book.titulo) {
+      errors.titulo = 'O título é obrigatório';
+    }
+    if (!book.autor) {
+      errors.autor = 'O autor é obrigatório';
+    }
+    if (!book.anoPublicacao) {
+      errors.anoPublicacao = 'O ano de publicação é obrigatório';
+    } else if (isNaN(book.anoPublicacao) || book.anoPublicacao <= 0) {
+      errors.anoPublicacao = 'O ano de publicação deve ser um número positivo';
+    }
+    if (!book.numeroDePaginas) {
+      errors.numeroDePaginas = 'O numero de paginas é obrigatório';
+    } else if (isNaN(book.numeroDePaginas) || book.numeroDePaginas <= 0) {
+      errors.numeroDePaginas = 'O numero de paginas deve ser um número positivo';
+    }
+    return errors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const validationErrors = validate(newBook);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
     try {
       await axios.post('/books', newBook);
       setNewBook({ titulo: '', autor: '', anoPublicacao: '' });
@@ -44,6 +74,11 @@ function App() {
   };
 
   const handleUpdate = async (id) => {
+    const validationErrors = validate(editingBook);
+    if (Object.keys(validationErrors).length > 0) {
+      setEditErrors(validationErrors);
+      return;
+    }
     try {
       await axios.put(`/books/${id}`, editingBook);
       setEditingBook(null);
@@ -78,6 +113,7 @@ function App() {
             placeholder="Título"
             required
           />
+          {errors.titulo && <div className="error">{errors.titulo}</div>}
           <input
             type="text"
             name="autor"
@@ -86,6 +122,7 @@ function App() {
             placeholder="Autor"
             required
           />
+          {errors.autor && <div className="error">{errors.autor}</div>}
           <input
             type="number"
             name="anoPublicacao"
@@ -94,9 +131,17 @@ function App() {
             placeholder="Ano de Publicação"
             required
           />
-          <button type="submit">Adicionar Livro</button>
-          <button type="submit">Deletar Livro</button>
-          <button type="submit">Editar Livro</button>
+          {errors.anoPublicacao && <div className="error">{errors.anoPublicacao}</div>}
+          <input
+            type="number"
+            name="numeroDePaginas"
+            value={newBook.numeroDePaginas}
+            onChange={handleInputChange}
+            placeholder="Numero De Paginas"
+            required
+          />
+          {errors.numeroDePaginas && <div className="error">{errors.numeroDePaginas}</div>}
+          <button type="submit">Adicionar Livro</button>     
         </form>
         <div className="book-list">
           {books.map(book => (
@@ -111,6 +156,7 @@ function App() {
                     placeholder="Título"
                     required
                   />
+                  {editErrors.titulo && <div className="error">{editErrors.titulo}</div>}
                   <input
                     type="text"
                     name="autor"
@@ -119,6 +165,7 @@ function App() {
                     placeholder="Autor"
                     required
                   />
+                  {editErrors.autor && <div className="error">{editErrors.autor}</div>}
                   <input
                     type="number"
                     name="anoPublicacao"
@@ -127,6 +174,16 @@ function App() {
                     placeholder="Ano de Publicação"
                     required
                   />
+                  {editErrors.anoPublicacao && <div className="error">{editErrors.anoPublicacao}</div>}
+                  <input
+                    type="number"
+                    name="numeroDePaginas"
+                    value={newBook.numeroDePaginas}
+                    onChange={handleInputChange}
+                    placeholder="Numero De Paginas"
+                    required
+                  />
+                  {editErrors.numeroDePaginas && <div className="error">{editErrors.numeroDePaginas}</div>}
                   <button onClick={() => handleUpdate(book.id)}>Salvar</button>
                   <button onClick={() => setEditingBook(null)}>Cancelar</button>
                 </div>
@@ -135,6 +192,7 @@ function App() {
                   <h2>{book.titulo}</h2>
                   <p>Autor: {book.autor}</p>
                   <p>Ano de Publicação: {book.anoPublicacao}</p>
+                  <p>Numero De Paginas: {book.numeroDePaginas}</p>
                   <button onClick={() => setEditingBook(book)}>Editar</button>
                   <button onClick={() => handleDelete(book.id)}>Deletar</button>
                 </div>

@@ -40,6 +40,7 @@ public class BookResource {
         entity.titulo = book.titulo;
         entity.autor = book.autor;
         entity.anoPublicacao = book.anoPublicacao;
+        entity.numeroDePaginas = book.numeroDePaginas;
         return entity;
     }
 

@@ -17,4 +17,7 @@ public class Book extends PanacheEntity {
     
     @Column(name = "ano_publicacao")
     public int anoPublicacao;
+
+    @Column(name = "numero_de_paginas")
+    public int numeroDePaginas;
 }

@@ -6,7 +6,8 @@ Repositório de teste de JDBC
 Rodar Containers
 ```shell script
 podman run --name meu-mysql -e MYSQL_ROOT_PASSWORD=minhasenha -p 3306:3306 -d mysql 
-podman run --network minharede --name meu-backand -p 8081:8081 -d books-app-backend-jvm
+podman run --network minharede --name meu-mysql -e MYSQL_ROOT_PASSWORD=minhasenha -p 3306:3306 -d mysqlcustomizado:1.0
+podman run --network minharede --name meu-backand -p 8081:8081 -d books-app-backend-jvm:1.0
 ```
 Executa os comandos sql dentro do container
 ```shell script
@@ -55,6 +56,6 @@ Porta
 ```podman create network (nome da netwokr) - criar uma rede propria entre os containers
 ```npm start - iniciar o front
 ```ctrl C - parar os arquivos
-
+```podman build -f podman/Containerfile -t mysqlcustomizado:1.0 . 
 
 

@@ -34,6 +34,9 @@ public class BibliotecaGUI extends JFrame {
         constraints.gridy++; // próxima linha
         add(new JLabel("ID (para atualizar/deletar):"), constraints);
 
+        constraints.gridy++; // próxima linha
+        add(new JLabel("Numero de paginas:"), constraints);
+
         // Text Fields
         constraints.gridx = 1; // segunda coluna
         constraints.gridy = 0; // primeira linha
@@ -51,6 +54,10 @@ public class BibliotecaGUI extends JFrame {
         constraints.gridy++; // próxima linha
         txtId = new JTextField(25);
         add(txtId, constraints);
+
+        constraints.gridy++; // próxima linha
+        txtnumeroDePaginas = new JTextField(25);
+        add(txtnumeroDePaginas, constraints);
 
         // Buttons
         constraints.gridx = 0; // primeira coluna
@@ -102,7 +109,8 @@ public class BibliotecaGUI extends JFrame {
                 String titulo = txtTitulo.getText();
                 String autor = txtAutor.getText();
                 int anoPublicacao = Integer.parseInt(txtAnoPublicacao.getText());
-                App.InserirLivro(statement, titulo, autor, anoPublicacao);
+                int numeroDePaginas = Integer.parseInt(txtnumeroDePaginas.getText());
+                App.InserirLivro(statement, titulo, autor, anoPublicacao, NumeroDePaginas);
                 txtAreaResultados.setText("Livro inserido com sucesso!");
                 connection.close();
                 limparCampos();
@@ -120,7 +128,7 @@ public class BibliotecaGUI extends JFrame {
             String resultados = "";
             if (validarCamposConsulta() == true) {
                 resultados = App.ConsultarLivro(statement, txtTitulo.getText(), txtAutor.getText(),
-                        txtAnoPublicacao.getText(), txtId.getText());
+                        txtAnoPublicacao.getText(), txtId.getText(), txtnumeroDePaginas.getText());
                 limparCampos();
             } else {
                 resultados = App.ConsultarLivros(statement);
@@ -141,6 +149,7 @@ public class BibliotecaGUI extends JFrame {
                 String autor = txtAutor.getText();
                 int anoPublicacao = Integer.parseInt(txtAnoPublicacao.getText());
                 int id = Integer.parseInt(txtId.getText());
+                int numeroDePaginas = Integer.parseInt(txtnumeroDePaginas.getText());
                 App.AtualizarLivro(statement, titulo, autor, anoPublicacao, id);
                 txtAreaResultados.setText("Livro atualizado com sucesso!");
                 connection.close();
@@ -177,6 +186,7 @@ public class BibliotecaGUI extends JFrame {
         txtAutor.setText("");
         txtAnoPublicacao.setText("");
         txtId.setText("");
+        txtnumeroDePaginas.setText("");
     }
 
     private boolean validarCampos() {
@@ -185,8 +195,9 @@ public class BibliotecaGUI extends JFrame {
         String titulo = txtTitulo.getText();
         String autor = txtAutor.getText();
         String anoPublicacao = txtAnoPublicacao.getText();
+        String numeroDePaginas = txtnumeroDePaginas.getText();
 
-        if (!titulo.isEmpty() && !autor.isEmpty() && !anoPublicacao.isEmpty()) {
+        if (!titulo.isEmpty() && !autor.isEmpty() && !anoPublicacao.isEmpty() && !numeroDePaginas.isEmpty()) {
             resultado = true;
         }
         return resultado;
@@ -199,8 +210,9 @@ public class BibliotecaGUI extends JFrame {
         String autor = txtAutor.getText();
         String anoPublicacao = txtAnoPublicacao.getText();
         String id = txtId.getText();
+        String numeroDePaginas = txtnumeroDePaginas.getText();
 
-        if (!titulo.isEmpty() || !autor.isEmpty() || !anoPublicacao.isEmpty() || !id.isEmpty()) {
+        if (!titulo.isEmpty() || !autor.isEmpty() || !anoPublicacao.isEmpty() || !id.isEmpty() || !numeroDePaginas.isEmpty()) {
             resultado = true;
         }
         return resultado;
