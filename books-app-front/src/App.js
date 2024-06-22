@@ -3,6 +3,8 @@ import './App.css';
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+// Defina a URL base da API
+const API_URL = process.env.QUARKUS_APP_API_URL || 'http://localhost:8081';
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -17,7 +19,7 @@ function App() {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('/books');
+      const response = await axios.get(`${API_URL}/books`);
       setBooks(response.data);
     } catch (error) {
       console.error('Erro ao buscar livros:', error);
@@ -65,8 +67,8 @@ function App() {
       return;
     }
     try {
-      await axios.post('/books', newBook);
-      setNewBook({ titulo: '', autor: '', anoPublicacao: '' });
+      await axios.post(`${API_URL}/books`, newBook);
+      setNewBook({ titulo: '', autor: '', anoPublicacao: '', numeroDePaginas: ''});
       fetchBooks();
     } catch (error) {
       console.error('Erro ao adicionar livro:', error);
@@ -80,7 +82,7 @@ function App() {
       return;
     }
     try {
-      await axios.put(`/books/${id}`, editingBook);
+      await axios.put(`${API_URL}/books/${id}`, editingBook);
       setEditingBook(null);
       fetchBooks();
     } catch (error) {
@@ -90,7 +92,7 @@ function App() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/books/${id}`);
+      await axios.delete(`${API_URL}/books/${id}`);
       fetchBooks();
     } catch (error) {
       console.error('Erro ao deletar livro:', error);

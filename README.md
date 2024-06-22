@@ -8,6 +8,13 @@ Rodar Containers
 podman run --name meu-mysql -e MYSQL_ROOT_PASSWORD=minhasenha -p 3306:3306 -d mysql 
 podman run --network minharede --name meu-mysql -e MYSQL_ROOT_PASSWORD=minhasenha -p 3306:3306 -d mysqlcustomizado:1.0
 podman run --network minharede --name meu-backand -p 8081:8081 -d books-app-backend-jvm:1.0
+podman run --network minharede --name frontend -p 3000:80 -e QUARKUS_APP_API_URL=http://meu-backend:8081 -d booksappfront:1.0
+```
+Imagens Containers
+```shell script 
+podman build -f podman/Containerfile -t mysqlcustomizado:1.0 .
+podman build -f src/main/docker/Dockerfile.jvm -t quarkus/books-app-backend-jvm:1.0 .
+podman build -f podman/Containerfile -t booksappfront:1.0 . --no-cache
 ```
 Executa os comandos sql dentro do container
 ```shell script
@@ -56,6 +63,6 @@ Porta
 ```podman create network (nome da netwokr) - criar uma rede propria entre os containers
 ```npm start - iniciar o front
 ```ctrl C - parar os arquivos
-```podman build -f podman/Containerfile -t mysqlcustomizado:1.0 . 
+
 
 
