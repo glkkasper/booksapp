@@ -21,7 +21,7 @@ public class App {
             Statement comando = conexao.createStatement();
             /* System.out.println(InserirLivro(comando, "RedHat", "Tulio", 2024)); */
             ConsultarLivros(comando);
-            AtualizarLivro(comando, "Revolucao dos bichos", "Gorge", 2018, 2);
+            AtualizarLivro(comando, "Revolucao dos bichos", "Gorge", 2018, 2, 03);
             ConsultarLivros(comando);
             DeletarLivro(comando, 1);
             ConsultarLivros(comando);
@@ -37,7 +37,7 @@ public class App {
 
     public static String InserirLivro(Statement statement, String titulo, String autor, int ano_publicacao, int numeroDePaginas)
             throws SQLException {
-        int retorno = statement.executeUpdate("INSERT INTO livros (titulo, autor, ano_publicacao, numero) VALUES ('" + titulo
+        int retorno = statement.executeUpdate("INSERT INTO livros (titulo, autor, ano_publicacao, numero_de_paginas) VALUES ('" + titulo
                 + "', '" + autor + "', " + ano_publicacao + numeroDePaginas + ");");
         if (retorno == 1) {
             return "Livro inserido com sucesso";
@@ -52,7 +52,7 @@ public class App {
         while (resultados.next()) {
             resultadosFormatados = resultadosFormatados + "ID: " + resultados.getInt("id") + ", Título: "
                     + resultados.getString("titulo") + ", Autor: " + resultados.getString("autor")
-                    + ", Ano de Publicação: " + resultados.getInt("ano_publicacao") + " Numero De Paginas: " + resultados.getInt("numeroDePaginas") + "\n";
+                    + ", Ano de Publicação: " + resultados.getInt("ano_publicacao") + " Numero De Paginas: " + resultados.getInt("numero_de_paginas") + "\n";
 
         }
         return resultadosFormatados;
@@ -74,7 +74,7 @@ public class App {
             consulta = consulta + " AND id = " + id;
         }
         if (!numeroDePaginas.isEmpty()) {
-            consulta = consulta + " AND id = " + numeroDePaginas;    
+            consulta = consulta + " AND numero_de_paginas = " + numeroDePaginas;    
             
         }
         ResultSet resultados = statement.executeQuery(consulta);
@@ -82,7 +82,7 @@ public class App {
         while (resultados.next()) {
             resultadosFormatados = resultadosFormatados + "ID: " + resultados.getInt("id") + ", Título: "
                     + resultados.getString("titulo") + ", Autor: " + resultados.getString("autor")
-                    + ", Ano de Publicação: " + resultados.getInt("ano_publicacao") + " Numero De Paginas: " + resultados.getInt("numeroDePaginas") + "\n";
+                    + ", Ano de Publicação: " + resultados.getInt("ano_publicacao") + " Numero De Paginas: " + resultados.getInt("numero_de_paginas") + "\n";
 
         }
         if (resultadosFormatados.isEmpty()) {
@@ -95,7 +95,7 @@ public class App {
     public static String AtualizarLivro(Statement statement, String titulo, String autor, int ano_publicacao, int id, int numeroDePaginas)
             throws SQLException {
         int retorno = statement.executeUpdate("UPDATE livros SET titulo='" + titulo + "', autor='" + autor
-                + "', ano_publicacao=" + ano_publicacao + "', numeroDePaginas=" + numeroDePaginas + "' WHERE id=" + id);
+                + "', ano_publicacao=" + ano_publicacao + "', numero_de_paginas=" + numeroDePaginas + "' WHERE id=" + id);
         if (retorno == 1) {
             return "Livro atualizado com sucesso";
 

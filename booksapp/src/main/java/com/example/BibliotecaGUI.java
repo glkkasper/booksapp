@@ -6,7 +6,7 @@ import java.awt.event.*;
 import java.sql.*;
 
 public class BibliotecaGUI extends JFrame {
-    private JTextField txtTitulo, txtAutor, txtAnoPublicacao, txtId;
+    private JTextField txtTitulo, txtAutor, txtAnoPublicacao, txtId, txtnumeroDePaginas;
     private JButton btnInserir, btnConsultar, btnAtualizar, btnDeletar;
     private JTextArea txtAreaResultados;
 
@@ -110,7 +110,7 @@ public class BibliotecaGUI extends JFrame {
                 String autor = txtAutor.getText();
                 int anoPublicacao = Integer.parseInt(txtAnoPublicacao.getText());
                 int numeroDePaginas = Integer.parseInt(txtnumeroDePaginas.getText());
-                App.InserirLivro(statement, titulo, autor, anoPublicacao, NumeroDePaginas);
+                App.InserirLivro(statement, titulo, autor, anoPublicacao, numeroDePaginas);
                 txtAreaResultados.setText("Livro inserido com sucesso!");
                 connection.close();
                 limparCampos();
@@ -150,7 +150,7 @@ public class BibliotecaGUI extends JFrame {
                 int anoPublicacao = Integer.parseInt(txtAnoPublicacao.getText());
                 int id = Integer.parseInt(txtId.getText());
                 int numeroDePaginas = Integer.parseInt(txtnumeroDePaginas.getText());
-                App.AtualizarLivro(statement, titulo, autor, anoPublicacao, id);
+                App.AtualizarLivro(statement, titulo, autor, anoPublicacao, id, numeroDePaginas);
                 txtAreaResultados.setText("Livro atualizado com sucesso!");
                 connection.close();
                 limparCampos();
