@@ -26,7 +26,8 @@ SELECT * FROM livros;
 SELECT * FROM autores;
 
 --exemplo com JOIN
-SELECT livros.id,livros.titulo,livros.ano_publicacao,livros.numero_de_paginas as 'Número de Paginas', autores.nome as autor FROM livros JOIN autores ON livros.autor_id = autores.id 
+SELECT livros.id,livros.titulo,livros.ano_publicacao,livros.numero_de_paginas as 'Número de Paginas', autores.nome as autor FROM livros 
+JOIN autores ON livros.autor_id = autores.id 
  WHERE titulo = 'Biblia';
 /*UPDATE livros SET autor = 'Osvaldo' WHERE id = 2;*/
 
