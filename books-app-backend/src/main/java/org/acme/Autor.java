@@ -12,5 +12,6 @@ public class Autor extends PanacheEntity {
     public String nome;
 
     @Column(name = "data_nascimento")
+    @Temporal(TemporalType.DATE)
     public Date dataNascimento;
 }

@@ -16,8 +16,8 @@ CREATE TABLE livros (
     FOREIGN KEY (autor_id) REFERENCES autores(id)
 );
 
-INSERT INTO autores (nome, data_nascimento) VALUES ('Deus', '0000-01-01');
-INSERT INTO autores (nome, data_nascimento) VALUES ('Gabriel', '1990-06-15');
+INSERT INTO autores (nome, data_nascimento) VALUES ('Deus', '2000-01-01');
+INSERT INTO autores (nome, data_nascimento) VALUES ('Gabriel', '2001-02-09');
 
 INSERT INTO livros (titulo, ano_publicacao, numero_de_paginas, autor_id) VALUES ('Biblia', 1000, 1950, 1);
 INSERT INTO livros (titulo, ano_publicacao, numero_de_paginas, autor_id) VALUES ('Caderno', 2023, 3000, 2);
