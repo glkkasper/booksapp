@@ -25,7 +25,7 @@ INSERT INTO livros (titulo, ano_publicacao, numero_de_paginas, autor_id) VALUES 
 SELECT * FROM livros;
 SELECT * FROM autores;
 
---exemplo com JOIN
+/* exemplo com JOIN */
 SELECT livros.id,livros.titulo,livros.ano_publicacao,livros.numero_de_paginas as 'Número de Paginas', autores.nome as autor FROM livros 
 JOIN autores ON livros.autor_id = autores.id 
  WHERE titulo = 'Biblia';
