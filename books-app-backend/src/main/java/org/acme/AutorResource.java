@@ -1,11 +1,15 @@
 package org.acme;
 
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import java.util.List;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.hibernate.exception.ConstraintViolationException;
 
 @Path("/autores")
 @Produces(MediaType.APPLICATION_JSON)
@@ -13,12 +17,12 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 @Tag(name = "Autor Resource", description = "CRUD operations for autores")
 public class AutorResource {
 
-    @GET 
+    @GET
     @Operation(summary = "Get all autores", description = "Returns a list of all autores")
     public List<Autor> getAllAutores() {
         return Autor.listAll();
     }
-    
+
     @POST
     @Transactional
     @Operation(summary = "Add a new autores", description = "Creates a new autores and returns it")
@@ -34,7 +38,7 @@ public class AutorResource {
     @Operation(summary = "Update an existing autor", description = "Updates the details of an existing autor")
     public Autor updateAutor(@PathParam("id") Long id, Autor autor) {
         Autor entity = Autor.findById(id);
-        if(entity == null) {
+        if (entity == null) {
             throw new NotFoundException();
         }
         entity.nome = autor.nome;
@@ -45,13 +49,26 @@ public class AutorResource {
     @DELETE
     @Path("/{id}")
     @Transactional
-    @Operation(summary = "Delete a autor", description = "Deletes a autor by its ID")
-    public void deleteAutor(@PathParam("id") Long id) {
-        Autor entity = Autor.findById(id);
-        if(entity == null) {
-            throw new NotFoundException();
+    public Response deleteAutor(@PathParam("id") Long id) {
+        Autor autor = Autor.findById(id);
+        if (autor == null) {
+            throw new WebApplicationException("Autor com id de " + id + " não existe.", 404);
         }
-        entity.delete();
+
+        // Verifica se há livros associados a este autor
+        long livrosAssociados = Book.count("autor", autor);
+        if (livrosAssociados > 0) {
+            // Cria um objeto JSON para a mensagem de erro
+            String jsonErrorMessage = "{\"error\": \"Não é possível excluir o autor, pois existem " + livrosAssociados
+                    + " livro(s) associado(s) a ele.\"}";
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(jsonErrorMessage)
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
+        }
+
+        autor.delete();
+        return Response.noContent().build();
     }
 
 }
