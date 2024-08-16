@@ -2,7 +2,10 @@ package org.acme;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import javax.persistence.*;
-import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDate;
 
 @Entity
 @Table (name = "autores")
@@ -12,6 +15,6 @@ public class Autor extends PanacheEntity {
     public String nome;
 
     @Column(name = "data_nascimento")
-    @Temporal(TemporalType.DATE)
-    public Date dataNascimento;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    public LocalDate dataNascimento;
 }
