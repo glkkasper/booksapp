@@ -1,0 +1,67 @@
+.Livros {
+    text-align: center;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  input[type="text"], input[type="number"] {
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #000000;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #3d3c3c;
+  }
+  
+  .book-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .book-item {
+    background-color: rgb(247, 247, 247);
+    padding: 20px;
+    border: 1px solid #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgb(0, 0, 0);
+    text-align: left;
+  }
+  
+  .book-item h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+  }
+  
+  .book-item p {
+    margin-bottom: 5px;
+  }
+  
+  .book-item button {
+    margin-right: 10px;
+  }
+  
+  .error {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
